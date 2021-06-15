@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="box" style=" margin-left: 450px; text-align: center; width: 30%; padding: 20px; margin-top: 175px; background: linear-gradient(to right, #B2FEFA,#0ED2F7);" >
+       
+        <div id="wicon" text-align: center;>
+            <i class="far fa-sun" style="color: gray;"></i>
+        </div>
+
+        <div class="info" text-align: center;>
+            <h2 class="location"><i class="fas fa-map-marker-alt" style="color: black;"></i>&nbsp{%location%},{%country%}</h2>
+            <p id="date">today's date</p>
+            <h1 class="temp">{%tempval%}&deg;C</h1>
+            <h3 class="temp_minmax">Min {%mintemp%}&deg;C | Max {%maxtemp%}&deg;C</h3>
+        </div>
+    </div>
+
+    <script>
+        const cdate=document.getElementById("date");
+        let wicon=document.getElementById("wicon");
+
+        const tempStatus="{%tempstatus%}";
+
+        if(tempStatus=="Sunny")
+        {
+           wicon.innerHTML= "<i class='far fa-sun' style='color: yellow;'></i>";
+        }
+        else if(tempStatus=="Rainy")
+        {
+            wicon.innerHTML= "<i class='fas fa-cloud-rain' style='color:blue;'></i>";
+        }
+        else{
+            wicon.innerHTML="<i class='fas fa-cloud' style='color:gray;'></i>";
+        }
+        const getcday = ()=>{
+            var weekday= new Array(7);
+
+            weekday[0]="Sunday";
+            weekday[1]="Monday";
+            weekday[2]="Tuesday";
+            weekday[3]="Wednesday";
+            weekday[4]="Thursday";
+            weekday[5]="Friday";
+            weekday[6]="Saturday";
+
+            let currtime= new Date();
+            let day=weekday[currtime.getDay()];
+            return day;
+        };
+
+        const getctime = () =>{
+            var now = new Date();
+            var date = now.getDate();
+            var month = now.getMonth() + 1;
+            var year = now.getFullYear(); 
+
+            let hours=now.getHours();
+            let mins=now.getMinutes();
+
+            let period=" AM";
+            if(hours>11)
+            {
+                period=" PM";
+                if(hours>12)
+                {
+                    hours-=12;
+                }
+            }
+            if(mins<10)
+            {
+                mins="0"+mins;
+            }
+
+            return `${month}/${date} | ${hours}:${mins}${period}`;
+        };
+
+        cdate.innerHTML = getcday() + "|" + getctime();
+    </script>
+</body>
+</html>
